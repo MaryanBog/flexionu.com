@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flexion U — Flexion Universe</title>
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+    <style>
+        :root {
+            --bg-main: #05070b;
+            --bg-alt: #070a11;
+            --accent: #40e0ff;
+            --accent-soft: rgba(64, 224, 255, 0.18);
+            --text-main: #f4f6ff;
+            --text-muted: #9ca3b8;
+            --border-soft: rgba(148, 163, 184, 0.3);
+            --card-bg: rgba(15, 23, 42, 0.85);
+            --radius-xl: 22px;
+            --radius-lg: 18px;
+            --shadow-soft: 0 28px 80px rgba(15, 23, 42, 0.95);
+            --shadow-subtle: 0 16px 40px rgba(15, 23, 42, 0.75);
+            --transition-fast: 0.18s ease-out;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            font-family: "Space Grotesk", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+            background: radial-gradient(circle at top left, #111827 0, #020617 35%, #000 100%);
+            color: var(--text-main);
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* Header */
+
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            backdrop-filter: blur(22px);
+            background: linear-gradient(to bottom, rgba(2, 6, 23, 0.92), rgba(2, 6, 23, 0.72), transparent);
+            border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+        }
+
+        .header-inner {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 14px 20px 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .logo-block {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-mark {
+            width: 34px;
+            height: 34px;
+            border-radius: 12px;
+            background: radial-gradient(circle at 20% 20%, #67e8f9, #0ea5e9 40%, #1e293b 75%, #020617 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 18px;
+            letter-spacing: 0.08em;
+            color: #e5faff;
+            box-shadow: 0 10px 30px rgba(56, 189, 248, 0.58);
+        }
+
+        .logo-text-main {
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+
+        .logo-text-sub {
+            font-size: 11px;
+            color: var(--text-muted);
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .nav a {
+            position: relative;
+            padding: 4px 0;
+        }
+
+        .nav a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #22d3ee, #38bdf8);
+            transition: width var(--transition-fast);
+        }
+
+        .nav a:hover::after {
+            width: 100%;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            border: 1px solid rgba(148, 163, 184, 0.5);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            color: var(--text-muted);
+        }
+
+        .badge-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 999px;
+            background: #22c55e;
+            box-shadow: 0 0 8px #22c55e;
+        }
+
+        /* Layout */
+
+        .page {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 32px 20px 60px;
+        }
+
+        /* Hero */
+
+        .hero {
+            display: grid;
+            grid-template-columns: minmax(0, 3.5fr) minmax(0, 2.5fr);
+            gap: 32px;
+            align-items: center;
+            margin-top: 14px;
+        }
+
+        @media (max-width: 880px) {
+            .hero {
+                grid-template-columns: minmax(0, 1fr);
+            }
+        }
+
+        .hero-title {
+            font-size: clamp(32px, 5vw, 44px);
+            line-height: 1.1;
+            margin: 0 0 12px;
+        }
+
+        .hero-gradient {
+            background: linear-gradient(90deg, #e5f0ff, #7dd3fc, #a855f7);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero-sub {
+            font-size: 16px;
+            color: var(--text-muted);
+            max-width: 520px;
+        }
+
+        .hero-sub strong {
+            color: #e5e7eb;
+            font-weight: 500;
+        }
+
+        .hero-actions {
+            margin-top: 24px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .btn-primary {
+            padding: 10px 20px;
+            border-radius: 999px;
+            border: none;
+            cursor: pointer;
+            background: radial-gradient(circle at 0% 0%, #67e8f9, #0ea5e9 45%, #0369a1 100%);
+            color: #0b1220;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            font-size: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 18px 50px rgba(34, 211, 238, 0.4);
+            transition: transform var(--transition-fast), box-shadow var(--transition-fast), filter var(--transition-fast);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 20px 70px rgba(34, 211, 238, 0.6);
+            filter: brightness(1.05);
+        }
+
+        .btn-ghost {
+            padding: 9px 18px;
+            border-radius: 999px;
+            border: 1px solid rgba(148, 163, 184, 0.5);
+            background: rgba(15, 23, 42, 0.7);
+            color: var(--text-main);
+            font-weight: 500;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: background var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
+        }
+
+        .btn-ghost:hover {
+            background: rgba(15, 23, 42, 0.95);
+            border-color: rgba(148, 163, 184, 0.8);
+            transform: translateY(-1px);
+        }
+
+        .hero-meta {
+            margin-top: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .hero-meta span {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .hero-meta-tag {
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(148, 163, 184, 0.35);
+            font-size: 11px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        /* Hero right panel */
+
+        .hero-panel {
+            border-radius: var(--radius-xl);
+            padding: 18px 18px 18px;
+            background: radial-gradient(circle at top right, rgba(56, 189, 248, 0.12), transparent 55%),
+                        radial-gradient(circle at bottom, rgba(129, 140, 248, 0.16), transparent 60%),
+                        rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(148, 163, 184, 0.5);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .hero-panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .hero-panel-title {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            color: var(--text-muted);
+        }
+
+        .hero-panel-chip {
+            font-size: 11px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(148, 163, 184, 0.4);
+            color: var(--text-muted);
+        }
+
+        .hero-state {
+            margin-top: 6px;
+            padding: 10px 12px;
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(148, 163, 184, 0.4);
+            background: rgba(15, 23, 42, 0.9);
+            font-family: "Space Grotesk", monospace;
+            font-size: 13px;
+        }
+
+        .hero-state span {
+            color: #7dd3fc;
+        }
+
+        .hero-grid {
+            margin-top: 14px;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+            font-size: 12px;
+        }
+
+        .hero-chip {
+            padding: 8px 9px;
+            border-radius: 16px;
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(148, 163, 184, 0.4);
+        }
+
+        .hero-chip-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            color: var(--text-muted);
+            margin-bottom: 2px;
+        }
+
+        .hero-chip-value {
+            font-size: 13px;
+        }
+
+        .hero-footnote {
+            margin-top: 12px;
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        /* Sections general */
+
+        .section {
+            margin-top: 52px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 18px;
+        }
+
+        .section-title {
+            font-size: 22px;
+            font-weight: 500;
+        }
+
+        .section-kicker {
+            font-size: 11px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .section-description {
+            font-size: 14px;
+            color: var(--text-muted);
+            max-width: 520px;
+        }
+
+        /* Cards */
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        @media (max-width: 900px) {
+            .grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 640px) {
+            .grid {
+                grid-template-columns: minmax(0, 1fr);
+            }
+        }
+
+        .card {
+            border-radius: var(--radius-lg);
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.92));
+            border: 1px solid rgba(148, 163, 184, 0.45);
+            padding: 14px 14px 16px;
+            box-shadow: var(--shadow-subtle);
+            position: relative;
+            overflow: hidden;
+            transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast), background 0.2s ease-out;
+        }
+
+        .card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.16), transparent 55%);
+            opacity: 0;
+            transition: opacity var(--transition-fast);
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 24px 60px rgba(15, 23, 42, 0.95);
+            border-color: rgba(56, 189, 248, 0.7);
+            background: linear-gradient(135deg, rgba(15, 23, 42, 1), rgba(15, 23, 42, 0.96));
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card-tag {
+            font-size: 10px;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+        }
+
+        .card-title {
+            font-size: 15px;
+            font-weight: 500;
+            margin-bottom: 6px;
+        }
+
+        .card-text {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+        }
+
+        .card-meta {
+            font-size: 11px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 6px;
+        }
+
+        .pill {
+            padding: 3px 8px;
+            border-radius: 999px;
+            border: 1px solid rgba(148, 163, 184, 0.6);
+            font-size: 10px;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+
+        /* Store & About */
+
+        .link-highlight {
+            color: var(--accent);
+        }
+
+        .about-text {
+            font-size: 14px;
+            color: var(--text-muted);
+            max-width: 720px;
+        }
+
+        /* Footer */
+
+        .footer {
+            margin-top: 60px;
+            border-top: 1px solid rgba(30, 64, 175, 0.6);
+            padding-top: 18px;
+            padding-bottom: 10px;
+            font-size: 12px;
+            color: var(--text-muted);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            font-size: 12px;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        /* Small screens nav */
+
+        @media (max-width: 720px) {
+            .nav {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="header-inner">
+        <div class="logo-block">
+            <div class="logo-mark">FU</div>
+            <div>
+                <div class="logo-text-main">Flexion U</div>
+                <div class="logo-text-sub">Flexion Universe</div>
+            </div>
+        </div>
+
+        <nav class="nav">
+            <a href="#framework">Framework</a>
+            <a href="#disciplines">Disciplines</a>
+            <a href="#research">Research</a>
+            <a href="#projects">Projects</a>
+            <a href="#store">Store</a>
+            <a href="#about">About</a>
+        </nav>
+
+        <div class="badge">
+            <span class="badge-dot"></span>
+            LIVE STRUCTURAL SYSTEM
+        </div>
+    </div>
+</header>
+
+<main class="page">
+    <!-- HERO -->
+    <section class="hero" id="top">
+        <div>
+            <h1 class="hero-title">
+                Structural science<br />
+                <span class="hero-gradient">for Flexion Universe</span>
+            </h1>
+            <p class="hero-sub">
+                Flexion U is the home of the <strong>Flexion Framework</strong> — a complete structural system built on
+                deviation (<strong>Δ</strong>), structural energy (<strong>Φ</strong>), memory (<strong>M</strong>), and contractivity (<strong>κ</strong>).
+                A new way to describe how systems <strong>live, evolve, and collapse</strong>.
+            </p>
+
+            <div class="hero-actions">
+                <button class="btn-primary" onclick="document.getElementById('framework').scrollIntoView({behavior:'smooth'})">
+                    Explore Framework →
+                </button>
+                <button class="btn-ghost" onclick="document.getElementById('research').scrollIntoView({behavior:'smooth'})">
+                    Open Research Library
+                </button>
+            </div>
+
+            <div class="hero-meta">
+                <span class="hero-meta-tag">Core: Flexion Dynamics V2.0</span>
+                <span>NGT · FIM · FRE · FML · FCS SDK</span>
+            </div>
+        </div>
+
+        <aside class="hero-panel">
+            <div class="hero-panel-header">
+                <div>
+                    <div class="hero-panel-title">Structural State Vector</div>
+                </div>
+                <div class="hero-panel-chip">X = (Δ, Φ, M, κ)</div>
+            </div>
+            <div class="hero-state">
+                X = (<span>Δ</span>, <span>Φ</span>, <span>M</span>, <span>κ</span>) ∈ D<br />
+                D — viability domain, C — collapse boundary
+            </div>
+
+            <div class="hero-grid">
+                <div class="hero-chip">
+                    <div class="hero-chip-label">Flexion Genesis</div>
+                    <div class="hero-chip-value">Origin of structure from symmetry break.</div>
+                </div>
+                <div class="hero-chip">
+                    <div class="hero-chip-label">Flexion Dynamics</div>
+                    <div class="hero-chip-value">Structural flow and motion in X-space.</div>
+                </div>
+                <div class="hero-chip">
+                    <div class="hero-chip-label">Flexion Space</div>
+                    <div class="hero-chip-value">Curved structural manifold for X.</div>
+                </div>
+                <div class="hero-chip">
+                    <div class="hero-chip-label">Flexion Time</div>
+                    <div class="hero-chip-value">Time as function of memory &amp; viability.</div>
+                </div>
+            </div>
+
+            <p class="hero-footnote">
+                From medical immunity to economic reserves and algorithmic systems — Flexion U provides a single
+                structural language for all collapse-resistant architectures.
+            </p>
+        </aside>
+    </section>
+
+    <!-- FLEXION FRAMEWORK -->
+    <section class="section" id="framework">
+        <div class="section-header">
+            <div>
+                <div class="section-kicker">Core Framework</div>
+                <h2 class="section-title">Flexion Framework</h2>
+            </div>
+            <p class="section-description">
+                A unified structural architecture of existence: origin, motion, geometry, fields, time, and collapse —
+                all expressed through the state vector X = (Δ, Φ, M, κ).
+            </p>
+        </div>
+
+        <div class="grid">
+            <article class="card">
+                <div class="card-tag">Genesis</div>
+                <div class="card-title">Flexion Genesis</div>
+                <div class="card-text">
+                    Birth of structure from unstable perfect symmetry. Sequential creation of Δ, Φ, M, κ and the first Flexion Field.
+                </div>
+                <div class="card-meta">
+                    <span class="pill">Origin Layer</span>
+                    <span>Structural creation</span>
+                </div>
+            </article>
+
+            <article class="card">
+                <div class="card-tag">Dynamics</div>
+                <div class="card-title">Flexion Dynamics</div>
+                <div class="card-text">
+                    Laws of structural motion and viability. Structural flows that keep X inside the viability domain D and away from collapse C.
+                </div>
+                <div class="card-meta">
+                    <span class="pill">Motion</span>
+                    <span>FD V2.0</span>
+                </div>
+            </article>
+
+            <article class="card">
+                <div class="card-tag">Space</div>
+                <div class="card-title">Flexion Space Theory</div>
+                <div class="card-text">
+                    Geometric and topological space where X lives. Curvature, geodesics, collapse boundary and multi-structure interaction.
+                </div>
+                <div class="card-meta">
+                    <span class="pill">Geometry</span>
+                    <span>FST V1.0</span>
+                </div>
+            </article>
+
+            <article class="card">
+                <div class="card-tag">Field</div>
+                <div class="card-title">Flexion Field Theory</div>
+                <div class="card-text">
+                    Structural fields acting on Δ, Φ, M, κ. Field coupling cascade and full geometry of collapse fields.
+                </div>
+                <div class="card-meta">
+                    <span class="pill">Fields</span>
+                    <span>FFT</span>
+                </div>
+            </article>
+
+            <article class="card">
+                <div class="card-tag">Time</div>
+                <div class="card-title">Flexion Time Theory</div>
+                <div class="card-text">
+                    Time as structural quantity T(Δ, Φ, M, κ). Temporal curvature, collapse of time, and multi-scale structural time.
+                </div>
+                <div class="card-meta">
+                    <span class="pill">Temporal</span>
+                    <span>FTT V1.1</span>
+                </div>
+            </article>
+
+            <article class="card">
+                <div class="card-tag">Collapse</div>
+                <div class="card-title">Flexion Collapse</div>
+                <div class="card-text">
+                    Geometry and dynamics of structural termination. κ → 0, curvature divergence, temporal breakdown and terminal manifolds.
+                </div>
+                <div class="card-meta">
+                    <span class="pill">Termination</span>
+                    <span>FC V1.0</span>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- CORE DISCIPLINES -->
+    <section class="section" id="disciplines">
+        <div class="section-header">
+            <div>
+                <div class="section-kicker">Applied Flexion Sciences</div>
+                <h2 class="section-title">Core Disciplines</h2>
+            </div>
+            <p class="section-description">
+                Flexion U hosts applied structural systems across immunity, risk, motion, control, and economic reserves — all built on the same structural core.
+            </p>
+        </div>
+
+        <div class="grid">
+            <article class="card">
+                <div class="card-tag">Immune</div>
+                <div class="card-title">Flexion Immune Model (FIM)</div>
+                <div class="card-text">
+                    Immunity as structural trajectories of X. Infection, inflammation, adaptation and recovery as motions in structural state space.
+                </div>
+                <div class="card-meta">
+                    <span class="pill">FIM V2.0</span>
+                    <span>Biology / Medicine</span>
+                </div>
+            </article>
+
+            <article class="card">
+                <div class="card-tag">Risk</div>
+                <div class="card-title">Flexionization Risk Engine (FRE)</div>
+                <div class="card-text">
+                    Structural risk detection and collapse-avoidance. Operator-level architecture for safe structural optimization and prediction.
+                </div>
+                <div class="card-meta">
+                    <span class="pill">FRE V2.0</span>
+                    <span>Risk Systems</span>
+                </div>
+            </article>
+
+            <article class="card">
+                <div class="card-tag">Motion Lab</div>
+                <div class="card-title">Flexion Motion Lab (FML)</div>
+                <div class="card-text">
+                    Applied operator theory for structural prediction. F, E, F⁻¹, G operators and Emergency Flexion Mode (EFM-ML).
+                </div>
+                <div class="card-meta">
+                    <span class="pill">FML V1.1</span>
+                    <span>Prediction</span>
+                </div>
+            </article>
+
+            <article class="card">
+                <div class="card-tag">Control</div>
+                <div class="card-title">Flexionization Control System (FCS SDK)</div>
+                <div class="card-text">
+                    SDK and architecture for live control of structural systems. FXI–Δ–E operator cycle in software.
+                </div>
+                <div class="card-meta">
+                    <span class="pill">FCS</span>
+                    <span>Control / SDK</span>
+                </div>
+            </article>
+
+            <article class="card">
+                <div class="card-tag">Economy</div>
+                <div class="card-title">NGT V2.0 — Structural Reserve Protocol</div>
+                <div class="card-text">
+                    Economic protocol that keeps reserves structurally alive. Governance defines viability domain D; protocol follows structural flow.
+                </div>
+                <div class="card-meta">
+                    <span class="pill">NGT V2.0</span>
+                    <span>DeFi / Economics</span>
+                </div>
+            </article>
+
+            <article class="card">
+                <div class="card-tag">Meta</div>
+                <div class="card-title">Flexion Framework</div>
+                <div class="card-text">
+                    Unified architecture connecting all fundamental theories and applied disciplines into one structural universe.
+                </div>
+                <div class="card-meta">
+                    <span class="pill">Framework V1.1</span>
+                    <span>Meta-Architecture</span>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- RESEARCH LIBRARY -->
+    <section class="section" id="research">
+        <div class="section-header">
+            <div>
+                <div class="section-kicker">Publications</div>
+                <h2 class="section-title">Research Library</h2>
+            </div>
+            <p class="section-description">
+                Core Flexion Science documents. Each text formalizes one layer of structural reality — from Genesis to Collapse and applied motion systems.
+            </p>
+        </div>
+
+        <div class="grid">
+            <article class="card">
+                <div class="card-tag">Core</div>
+                <div class="card-title">Flexion Framework V1.1</div>
+                <div class="card-text">
+                    Unified structural architecture connecting Genesis, Dynamics, Space, Field, Time, and Collapse.
+                </div>
+                <div class="card-meta">
+                    <span class="pill">PDF</span>
+                    <span>Framework</span>
+                </div>
+            </article>
+            <article class="card">
+                <div class="card-tag">Foundations</div>
+                <div class="card-title">Flexion Genesis V1.0</div>
+                <div class="card-text">
+                    Structural origin of existence from unstable perfect symmetry.
+                </div>
+                <div class="card-meta">
+                    <span class="pill">PDF</span>
+                    <span>Origin</span>
+                </div>
+            </article>
+            <article class="card">
+                <div class="card-tag">Geometry</div>
+                <div class="card-title">Flexion Space Theory V1.0</div>
+                <div class="card-text">
+                    Dynamic structural manifold, viability domain D, collapse boundary C and geodesics.
+                </div>
+                <div class="card-meta">
+                    <span class="pill">PDF</span>
+                    <span>Space</span>
+                </div>
+            </article>
+            <article class="card">
+                <div class="card-tag">Field</div>
+                <div class="card-title">Flexion Field Theory V1.0</div>
+                <div class="card-text">
+                    ∆–Φ–M–κ as interacting fields, field coupling cascade and collapse manifold.
+                </div>
+                <div class="card-meta">
+                    <span class="pill">PDF</span>
+                    <span>Field</span>
+                </div>
+            </article>
+            <article class="card">
+                <div class="card-tag">Time</div>
+                <div class="card-title">Flexion Time Theory V1.1</div>
+                <div class="card-text">
+                    Time as structural quantity T(Δ, Φ, M, κ), temporal curvature and collapse of time.
+                </div>
+                <div class="card-meta">
+                    <span class="pill">PDF</span>
+                    <span>Time</span>
+                </div>
+            </article>
+            <article class="card">
+                <div class="card-tag">Collapse</div>
+                <div class="card-title">Flexion Collapse V1.0</div>
+                <div class="card-text">
+                    Structural termination, κ→0, curvature divergence and field singularities.
+                </div>
+                <div class="card-meta">
+                    <span class="pill">PDF</span>
+                    <span>Collapse</span>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section class="section" id="projects">
+        <div class="section-header">
+            <div>
+                <div class="section-kicker">Ecosystem</div>
+                <h2 class="section-title">Flexion Universe Projects</h2>
+            </div>
+            <p class="section-description">
+                Live systems, SDKs and protocols built on Flexion. From structural immunity and risk to economic reserves and neural architectures.
+            </p>
+        </div>
+
+        <div class="grid">
+            <article class="card">
+                <div class="card-tag">Protocol</div>
+                <div class="card-title">NGT — Structural Reserve Protocol</div>
+                <div class="card-text">
+                    First reserve protocol running directly in structural space. DAO defines D; the protocol follows the structural flow inside it.
+                </div>
+                <div class="card-meta">
+                    <span class="pill">DeFi</span>
+                    <span>NGT V2.0</span>
+                </div>
+            </article>
+            <article class="card">
+                <div class="card-tag">Engine</div>
+                <div class="card-title">Flexionization Risk Engine</div>
+                <div class="card-text">
+                    Structural layer for collapse-avoidance. Detects approach to C and forces systems to remain in D.
+                </div>
+                <div class="card-meta">
+                    <span class="pill">Engine</span>
+                    <span>FRE V2.0</span>
+                </div>
+            </article>
+            <article class="card">
+                <div class="card-tag">SDK</div>
+                <div class="card-title">Flexionization Control System (FCS)</div>
+                <div class="card-text">
+                    Operator SDK implementing FXI–Δ–E cycles in live infrastructure.
+                </div>
+                <div class="card-meta">
+                    <span class="pill">SDK</span>
+                    <span>FCS</span>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- STORE -->
+    <section class="section" id="store">
+        <div class="section-header">
+            <div>
+                <div class="section-kicker">Store</div>
+                <h2 class="section-title">Flexion Store</h2>
+            </div>
+            <p class="section-description">
+                Dedicated space for structural artifacts: publications, extended editions, visualizations, and future Flexion-based products.
+            </p>
+        </div>
+
+        <p style="font-size:14px;color:var(--text-muted);">
+            Visit: <a class="link-highlight" href="https://flexionu.store" target="_blank" rel="noreferrer">flexionu.store</a>
+        </p>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="section" id="about">
+        <div class="section-header">
+            <div>
+                <div class="section-kicker">About</div>
+                <h2 class="section-title">About Flexion U</h2>
+            </div>
+        </div>
+
+        <p class="about-text">
+            Flexion U (Flexion Universe) is the structural research environment built on the Flexion Framework. It formalizes how systems
+            arise, evolve, generate time, preserve viability and terminate through collapse. Every Flexion discipline — from the Flexion
+            Immune Model and NGT Protocol to Flexion Motion Lab — uses the same structural core: X = (Δ, Φ, M, κ).
+            <br /><br />
+            Flexion U is not a metaphor or a brand only. It is a complete structural language for designing systems that can remain
+            alive — biological, economic, algorithmic, cognitive, or social.
+        </p>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer" id="contacts">
+        <div>Flexion Universe © 2025 — All Rights Reserved</div>
+        <div class="footer-links">
+            <!-- сюда потом просто подставишь реальные ссылки -->
+            <a href="#top">Back to top</a>
+            <a href="https://zenodo.org" target="_blank" rel="noreferrer">Zenodo</a>
+            <a href="https://x.com" target="_blank" rel="noreferrer">X (Twitter)</a>
+            <a href="mailto:info@flexionu.com">Contact</a>
+        </div>
+    </footer>
+</main>
+
+</body>
+</html>

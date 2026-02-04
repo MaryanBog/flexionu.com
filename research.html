@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Flexion Research</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<style>
+:root{
+  --bg1:#111827;
+  --bg2:#020617;
+  --fg:#f4f6ff;
+  --muted:#9ca3b8;
+  --muted2:#c7cbe3;
+  --accent:#7dd3fc;
+  --card: rgba(15, 23, 42, 0.70);
+  --border: rgba(148, 163, 184, 0.30);
+  --shadow: 0 24px 80px rgba(0,0,0,0.45);
+}
+
+*{ box-sizing:border-box; }
+html,body{ height:100%; }
+
+body{
+  margin:0;
+  font-family:"Sora", system-ui, sans-serif;
+  color:var(--fg);
+  background: radial-gradient(circle at top left, var(--bg1) 0, var(--bg2) 45%, #000 100%);
+}
+
+a{ color:inherit; text-decoration:none; }
+
+.container{
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 28px 90px;
+}
+
+/* Top nav */
+.topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  margin-bottom: 26px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.brand-dot{
+  width:10px; height:10px; border-radius:50%;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.55), transparent 45%),
+              radial-gradient(circle at 50% 50%, rgba(125,211,252,.9), rgba(2,6,23,1));
+  box-shadow: 0 0 18px rgba(125,211,252,.25);
+}
+
+.brand span{
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  font-size:12px;
+  color: rgba(244,246,255,.86);
+}
+
+.navlinks{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+.pill{
+  font-size:12px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  padding:10px 12px;
+  border-radius: 999px;
+  background: rgba(2,6,23,0.30);
+  border: 1px solid rgba(244,246,255,0.12);
+  color: rgba(244,246,255,0.86);
+}
+.pill:hover{ border-color: rgba(125,211,252,0.35); }
+
+/* Header */
+h1{
+  margin: 8px 0 18px;
+  font-size: clamp(34px, 4.6vw, 52px);
+  line-height: 1.05;
+}
+
+.sub{
+  margin: 0 0 28px;
+  max-width: 900px;
+  color: var(--muted2);
+  line-height: 1.65;
+  font-size: 16px;
+}
+
+/* Publications grid */
+.pubs{
+  display:grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap:14px;
+}
+
+.pub{
+  background: rgba(2,6,23,0.28);
+  border: 1px solid rgba(244,246,255,0.10);
+  border-radius: 18px;
+  padding: 18px;
+  transition: transform .18s ease, border-color .18s ease;
+}
+
+.pub:hover{
+  transform: translateY(-2px);
+  border-color: rgba(125,211,252,0.35);
+}
+
+.pub .title{
+  font-size:14px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color: rgba(244,246,255,0.92);
+  margin-bottom: 10px;
+  line-height:1.25;
+}
+
+.pub .doi{
+  font-size:12px;
+  letter-spacing:.08em;
+  color: rgba(244,246,255,0.70);
+  border-top:1px solid rgba(244,246,255,0.10);
+  padding-top:10px;
+}
+
+.pub .doi b{ color: rgba(244,246,255,0.88); }
+
+@media (max-width: 820px){
+  .pubs{ grid-template-columns: 1fr; }
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+  <div class="topbar">
+    <a class="brand" href="index.html">
+      <div class="brand-dot"></div>
+      <span>Flexion Universe</span>
+    </a>
+
+    <div class="navlinks">
+      <a class="pill" href="framework.html">Framework</a>
+      <a class="pill" href="research.html">Research</a>
+      <a class="pill" href="projects.html">Projects</a>
+      <a class="pill" href="contact.html">Contact</a>
+    </div>
+  </div>
+
+  <h1>Research</h1>
+  <p class="sub">
+    Public research works and theoretical documents related to the Flexion framework.
+    All items below are published and accessible via Zenodo DOIs.
+  </p>
+
+  <div class="pubs">
+
+    <a class="pub" href="https://doi.org/10.5281/zenodo.17860282" target="_blank">
+      <div class="title">Flexion Framework V1.5</div>
+      <div class="doi"><b>DOI</b> 10.5281/zenodo.17860282</div>
+    </a>
+
+    <a class="pub" href="https://doi.org/10.5281/zenodo.17822408" target="_blank">
+      <div class="title">FRE Risk Engine V4.0</div>
+      <div class="doi"><b>DOI</b> 10.5281/zenodo.17822408</div>
+    </a>
+
+    <a class="pub" href="https://doi.org/10.5281/zenodo.17929343" target="_blank">
+      <div class="title">Engineering Control Theory V1.0</div>
+      <div class="doi"><b>DOI</b> 10.5281/zenodo.17929343</div>
+    </a>
+
+    <a class="pub" href="https://doi.org/10.5281/zenodo.17822477" target="_blank">
+      <div class="title">Flexion Immune Model (FIM) V3.0</div>
+      <div class="doi"><b>DOI</b> 10.5281/zenodo.17822477</div>
+    </a>
+
+    <a class="pub" href="https://doi.org/10.5281/zenodo.17772012" target="_blank">
+      <div class="title">Next Generation Token V2.0</div>
+      <div class="doi"><b>DOI</b> 10.5281/zenodo.17772012</div>
+    </a>
+
+    <a class="pub" href="https://doi.org/10.5281/zenodo.17929872" target="_blank">
+      <div class="title">Flexion Physics V1.2</div>
+      <div class="doi"><b>DOI</b> 10.5281/zenodo.17929872</div>
+    </a>
+
+    <a class="pub" href="https://doi.org/10.5281/zenodo.17866892" target="_blank">
+      <div class="title">Flexion Intelligence Theory (FIT) V3.0</div>
+      <div class="doi"><b>DOI</b> 10.5281/zenodo.17866892</div>
+    </a>
+
+    <a class="pub" href="https://doi.org/10.5281/zenodo.17859169" target="_blank">
+      <div class="title">Next Generation Token (NGT) V3.0</div>
+      <div class="doi"><b>DOI</b> 10.5281/zenodo.17859169</div>
+    </a>
+
+    <a class="pub" href="https://doi.org/10.5281/zenodo.17860400" target="_blank">
+      <div class="title">Flexion Market Theory V3.1</div>
+      <div class="doi"><b>DOI</b> 10.5281/zenodo.17860400</div>
+    </a>
+
+    <a class="pub" href="https://doi.org/10.5281/zenodo.17929746" target="_blank">
+      <div class="title">Flexionization Control System V3.1</div>
+      <div class="doi"><b>DOI</b> 10.5281/zenodo.17929746</div>
+    </a>
+
+    <a class="pub" href="https://doi.org/10.5281/zenodo.17931232" target="_blank">
+      <div class="title">Flexion: Answers to the Fundamental Questions of Physics</div>
+      <div class="doi"><b>DOI</b> 10.5281/zenodo.17931232</div>
+    </a>
+
+    <a class="pub" href="https://doi.org/10.5281/zenodo.18402112" target="_blank">
+      <div class="title">Projection Horizon Theory</div>
+      <div class="doi"><b>DOI</b> 10.5281/zenodo.18402112</div>
+    </a>
+
+    <a class="pub" href="https://doi.org/10.5281/zenodo.18400777" target="_blank">
+      <div class="title">Flexion Artificial Intelligence (FAI)</div>
+      <div class="doi"><b>DOI</b> 10.5281/zenodo.18400777</div>
+    </a>
+
+    <a class="pub" href="https://doi.org/10.5281/zenodo.18164563" target="_blank">
+      <div class="title">Geonics-Sciences V3.1</div>
+      <div class="doi"><b>DOI</b> 10.5281/zenodo.18164563</div>
+    </a>
+
+  </div>
+
+</div>
+</body>
+</html>

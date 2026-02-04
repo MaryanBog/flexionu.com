@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Flexion Framework</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<style>
+:root{
+  --bg1:#111827;
+  --bg2:#020617;
+  --fg:#f4f6ff;
+  --muted:#9ca3b8;
+  --muted2:#c7cbe3;
+  --accent:#7dd3fc;
+  --card: rgba(15, 23, 42, 0.70);
+  --border: rgba(148, 163, 184, 0.30);
+  --shadow: 0 24px 80px rgba(0,0,0,0.45);
+}
+
+*{ box-sizing:border-box; }
+
+html,body{ height:100%; }
+
+body{
+  margin:0;
+  font-family:"Sora", system-ui, sans-serif;
+  color:var(--fg);
+  background: radial-gradient(circle at top left, var(--bg1) 0, var(--bg2) 45%, #000 100%);
+}
+
+a{ color:inherit; }
+
+.container{
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 28px 90px;
+}
+
+/* Top nav */
+.topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  margin-bottom: 26px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  text-decoration:none;
+}
+
+.brand-dot{
+  width:10px; height:10px; border-radius:50%;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.55), transparent 45%),
+              radial-gradient(circle at 50% 50%, rgba(125,211,252,.9), rgba(2,6,23,1));
+  box-shadow: 0 0 18px rgba(125,211,252,.25);
+}
+
+.brand span{
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  font-size:12px;
+  color: rgba(244,246,255,.86);
+}
+
+.navlinks{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+.pill{
+  text-decoration:none;
+  font-size:12px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  padding:10px 12px;
+  border-radius: 999px;
+  background: rgba(2,6,23,0.30);
+  border: 1px solid rgba(244,246,255,0.12);
+  color: rgba(244,246,255,0.86);
+}
+
+.pill:hover{
+  border-color: rgba(125,211,252,0.35);
+}
+
+/* Header */
+h1{
+  margin: 8px 0 10px;
+  font-size: clamp(34px, 4.6vw, 52px);
+  line-height: 1.05;
+}
+
+.sub{
+  margin: 0 0 28px;
+  max-width: 860px;
+  color: var(--muted2);
+  line-height: 1.65;
+  font-size: 16px;
+}
+
+/* Cards */
+.grid{
+  display:grid;
+  grid-template-columns: 1fr;
+  gap:18px;
+}
+
+.card{
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 18px 18px;
+  box-shadow: var(--shadow);
+}
+
+.card h2{
+  margin:0 0 10px;
+  font-size: 13px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color: var(--accent);
+}
+
+.card p{
+  margin:0;
+  color: var(--muted2);
+  line-height:1.65;
+  font-size: 15px;
+}
+
+/* State vector block */
+.state{
+  display:grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+.formula{
+  font-size: 20px;
+  letter-spacing: .10em;
+  color: var(--accent);
+}
+
+.defs{
+  display:grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap:10px 14px;
+}
+
+.def{
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: rgba(2,6,23,0.28);
+  border: 1px solid rgba(244,246,255,0.10);
+  color: rgba(244,246,255,0.86);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.def b{
+  color: rgba(244,246,255,0.96);
+}
+
+/* Components grid */
+.components{
+  display:grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: 14px;
+}
+
+.comp{
+  text-decoration:none;
+  padding: 16px 16px;
+  border-radius: 18px;
+  background: rgba(2,6,23,0.28);
+  border: 1px solid rgba(244,246,255,0.10);
+  transition: transform .18s ease, border-color .18s ease, background .18s ease;
+  min-height: 136px;
+  display:block;
+}
+
+.comp:hover{
+  transform: translateY(-2px);
+  border-color: rgba(125,211,252,0.35);
+  background: rgba(2,6,23,0.34);
+}
+
+.comp .title{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom: 8px;
+}
+
+.comp .name{
+  font-size: 14px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color: rgba(244,246,255,0.92);
+  line-height:1.15;
+}
+
+.comp .tag{
+  font-size: 11px;
+  letter-spacing:.10em;
+  text-transform:uppercase;
+  color: rgba(244,246,255,0.58);
+  white-space:nowrap;
+}
+
+.comp .desc{
+  color: var(--muted2);
+  font-size: 14px;
+  line-height: 1.55;
+  margin-bottom: 10px;
+}
+
+.comp .doi{
+  font-size: 12px;
+  letter-spacing: .08em;
+  color: rgba(244,246,255,0.70);
+  border-top: 1px solid rgba(244,246,255,0.10);
+  padding-top: 10px;
+  margin-top: 10px;
+}
+
+.comp .doi b{
+  color: rgba(244,246,255,0.88);
+  font-weight: 600;
+}
+
+/* Footer */
+.footer{
+  margin-top: 26px;
+  color: rgba(244,246,255,0.55);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.hr{
+  margin: 26px 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(125,211,252,0.35), transparent);
+  border: none;
+}
+
+@media (max-width: 820px){
+  .components{ grid-template-columns: 1fr; }
+  .defs{ grid-template-columns: 1fr; }
+  .container{ padding-top: 26px; }
+}
+</style>
+</head>
+
+<body>
+  <div class="container">
+
+    <div class="topbar">
+      <a class="brand" href="index.html" aria-label="Back to Home">
+        <div class="brand-dot"></div>
+        <span>Flexion Universe</span>
+      </a>
+
+      <div class="navlinks">
+        <a class="pill" href="framework.html">Framework</a>
+        <a class="pill" href="research.html">Research</a>
+        <a class="pill" href="projects.html">Projects</a>
+        <a class="pill" href="contact.html">Contact</a>
+      </div>
+    </div>
+
+    <h1>Flexion Framework</h1>
+    <p class="sub">
+      Flexion Framework is a unified structural theory for describing how systems remain viable,
+      lose reversibility, and collapse. It does not model behavior or outcomes — it models the
+      structural state that determines whether recovery is still possible.
+    </p>
+
+    <div class="grid">
+
+      <section class="card">
+        <h2>Core idea</h2>
+        <p>
+          Any system — biological, economic, technical, or informational — can be represented as a living
+          structural state evolving under constraints. The framework provides one language for stability,
+          drift, irreversibility, and collapse boundaries, independent of domain.
+        </p>
+      </section>
+
+      <section class="card">
+        <h2>Structural State Vector</h2>
+        <div class="state">
+          <div class="formula">X = (Δ, Φ, M, κ)</div>
+
+          <div class="defs">
+            <div class="def"><b>Δ</b> — deviation from structural balance</div>
+            <div class="def"><b>Φ</b> — structural energy / internal tension</div>
+            <div class="def"><b>M</b> — accumulated memory (irreversible history)</div>
+            <div class="def"><b>κ</b> — viability (capacity to remain a system)</div>
+          </div>
+
+          <p style="margin:0;color:var(--muted2);font-size:14px;line-height:1.6;">
+            Collapse is treated as a structural event: once reversibility is lost and κ approaches the boundary,
+            no intervention can restore the previous regime.
+          </p>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Core theories</h2>
+
+        <div class="components">
+
+          <a class="comp" href="https://doi.org/10.5281/zenodo.17618947" target="_blank" rel="noopener">
+            <div class="title">
+              <div class="name">Flexionization Theory V1.5</div>
+              <div class="tag">core</div>
+            </div>
+            <div class="desc">Foundational structural framework defining the living state and invariants.</div>
+            <div class="doi"><b>DOI</b> 10.5281/zenodo.17618947</div>
+          </a>
+
+          <a class="comp" href="https://doi.org/10.5281/zenodo.17791174" target="_blank" rel="noopener">
+            <div class="title">
+              <div class="name">Deflexionization V3.0</div>
+              <div class="tag">core</div>
+            </div>
+            <div class="desc">Structural reversal and termination regimes: when recovery becomes impossible.</div>
+            <div class="doi"><b>DOI</b> 10.5281/zenodo.17791174</div>
+          </a>
+
+          <a class="comp" href="https://doi.org/10.5281/zenodo.17687286" target="_blank" rel="noopener">
+            <div class="title">
+              <div class="name">Flexion Space Theory (FST) V1.0</div>
+              <div class="tag">space</div>
+            </div>
+            <div class="desc">Curved structural manifold for X and the geometry of viable regions.</div>
+            <div class="doi"><b>DOI</b> 10.5281/zenodo.17687286</div>
+          </a>
+
+          <a class="comp" href="https://doi.org/10.5281/zenodo.17668314" target="_blank" rel="noopener">
+            <div class="title">
+              <div class="name">Flexion Time Theory V1.1</div>
+              <div class="tag">time</div>
+            </div>
+            <div class="desc">Time defined structurally: as memory accumulation and loss of viability.</div>
+            <div class="doi"><b>DOI</b> 10.5281/zenodo.17668314</div>
+          </a>
+
+          <a class="comp" href="https://doi.org/10.5281/zenodo.17660262" target="_blank" rel="noopener">
+            <div class="title">
+              <div class="name">Flexion Dynamics V2.0</div>
+              <div class="tag">dynamics</div>
+            </div>
+            <div class="desc">Structural evolution in X: stability, drift, reversibility, termination, constraints.</div>
+            <div class="doi"><b>DOI</b> 10.5281/zenodo.17660262</div>
+          </a>
+
+          <a class="comp" href="https://doi.org/10.5281/zenodo.17680661" target="_blank" rel="noopener">
+            <div class="title">
+              <div class="name">Flexion Field Theory V1.0</div>
+              <div class="tag">field</div>
+            </div>
+            <div class="desc">Structural fields and interaction gradients governing coupled evolution.</div>
+            <div class="doi"><b>DOI</b> 10.5281/zenodo.17680661</div>
+          </a>
+
+          <a class="comp" href="https://doi.org/10.5281/zenodo.17695539" target="_blank" rel="noopener">
+            <div class="title">
+              <div class="name">Flexion Genesis V1.0</div>
+              <div class="tag">origin</div>
+            </div>
+            <div class="desc">Structural origin of deviation, memory, and time from symmetry loss.</div>
+            <div class="doi"><b>DOI</b> 10.5281/zenodo.17695539</div>
+          </a>
+
+          <a class="comp" href="https://doi.org/10.5281/zenodo.17710529" target="_blank" rel="noopener">
+            <div class="title">
+              <div class="name">Flexion Entanglement Theory</div>
+              <div class="tag">coupling</div>
+            </div>
+            <div class="desc">Structural coupling: shared time, co-evolution, and irreversible mutual influence.</div>
+            <div class="doi"><b>DOI</b> 10.5281/zenodo.17710529</div>
+          </a>
+
+          <a class="comp" href="https://doi.org/10.5281/zenodo.17726503" target="_blank" rel="noopener">
+            <div class="title">
+              <div class="name">Flexion Collapse V1.0</div>
+              <div class="tag">boundary</div>
+            </div>
+            <div class="desc">Structural termination: collapse geometry and irreversible breakdown regimes.</div>
+            <div class="doi"><b>DOI</b> 10.5281/zenodo.17726503</div>
+          </a>
+
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Applications</h2>
+        <p>
+          Flexion provides a single structural language for systems where collapse matters —
+          from medical immunity and economic reserves to infrastructure, control, and algorithmic systems.
+          Domain details differ; the viability logic and boundary geometry remain structural.
+        </p>
+      </section>
+
+    </div>
+
+    <hr class="hr" />
+
+    <div class="footer">
+      Tip: This page is a map. Proofs, papers, and datasets belong in <a href="research.html">Research</a>.
+      Implementations and demos belong in <a href="projects.html">Projects</a>.
+    </div>
+
+  </div>
+</body>
+</html>

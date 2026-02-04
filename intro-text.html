@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Flexion Universe — Intro</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+<style>
+    :root {
+        --fg: #f4f6ff;
+        --muted: #9ca3b8;
+        --accent: #7dd3fc;
+    }
+    
+    * { box-sizing: border-box; }
+    
+    html, body {
+        height: 100%;
+        margin: 0;
+    }
+    
+    body {
+        background: transparent;
+        color: var(--fg);
+        font-family: "Space Grotesk", system-ui, sans-serif;
+    }
+    
+    /* ВАЖНО: центрируем контент по вертикали внутри iframe */
+    .wrap {
+        height: 100%;
+        display: flex;
+        align-items: center;   /* вертикальный центр */
+    }
+    
+    .hero {
+        width: 100%;
+    }
+    
+    h1 {
+        font-size: clamp(38px, 5vw, 56px);
+        line-height: 1.05;
+        margin: 0 0 18px;
+    }
+    
+    .grad {
+        background: linear-gradient(90deg, #e5f0ff, #7dd3fc, #a855f7);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+    
+    .lead {
+        font-size: 18px;
+        line-height: 1.65;
+        color: #d1d5f0;
+        max-width: 760px;
+        margin: 0 0 14px;
+    }
+    
+    .small {
+        font-size: 16px;
+        line-height: 1.65;
+        color: #b7bdd6;
+        max-width: 760px;
+        margin: 0 0 14px;
+    }
+    
+    .formula {
+        margin-top: 18px;
+        font-size: 18px;
+        letter-spacing: 0.08em;
+        color: var(--accent);
+    }
+    
+    .formula-note {
+        margin-top: 8px;
+        font-size: 13px;
+        color: var(--muted);
+    }
+    
+    /* маленький “safety margin”, чтобы текст не лип к краям */
+    @media (max-width: 900px) {
+        .wrap { padding: 0 6px; }
+    }
+    </style>
+    
+</head>
+
+<body>
+    <div class="wrap">
+        <section class="hero">
+            <h1>
+                Flexion <span class="grad">Universe</span>
+            </h1>
+    
+            <p class="lead">
+                Flexion Universe is a unified structural framework for describing
+                how systems remain viable, lose reversibility, and collapse.
+            </p>
+    
+            <p class="small">
+                Instead of modeling behavior or outcomes, Flexion models the
+                structural state that determines whether recovery is still possible.
+            </p>
+    
+            <p class="small">
+                Any system — biological, economic, technical, or informational —
+                can be described through a single living state vector:
+            </p>
+    
+            <div class="formula">X = (Δ, Φ, M, κ)</div>
+            <div class="formula-note">
+                Δ — deviation · Φ — structural energy · M — memory · κ — viability
+            </div>
+    
+            <p class="small" style="margin-top:14px;">
+                This gives one language for stability, drift, irreversibility,
+                and collapse boundaries — independent of domain.
+            </p>
+        </section>
+    </div>
+    </body>
+    
+</html>

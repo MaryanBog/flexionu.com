@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Flexion Universe — Orbit</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<style>
+:root{
+  --fg:#f4f6ff;
+  --ring: rgba(125,211,252,.18);
+}
+
+*{ box-sizing:border-box; }
+
+html,body{
+  width:100%;
+  height:100%;
+  margin:0;
+  padding:0;
+}
+
+body{
+  background:transparent;
+  font-family:"Sora",system-ui,sans-serif;
+  color:var(--fg);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
+
+.system{
+  position:relative;
+  width:400px;
+  height:400px;
+}
+
+/* мягкая “дымка” вокруг (НЕ перехватывает клики) */
+.system::before{
+  content:"";
+  position:absolute;
+  inset:-20px;
+  border-radius:50%;
+  background:radial-gradient(circle, rgba(56,189,248,0.14), transparent 62%);
+  filter:blur(10px);
+  opacity:.95;
+  pointer-events:none;
+}
+
+/* тонкое орбитальное кольцо (НЕ перехватывает клики) */
+.system::after{
+  content:"";
+  position:absolute;
+  inset:18px;
+  border-radius:50%;
+  border:1px solid var(--ring);
+  box-shadow:0 0 26px rgba(125,211,252,0.10);
+  pointer-events:none;
+}
+
+/* ===== CENTER (LOGO PLANET) ===== */
+
+.center{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  width:182px;
+  height:182px;
+  border-radius:50%;
+  overflow:hidden;
+  isolation:isolate;
+  background:#0b1220;
+
+  box-shadow:
+    0 44px 140px rgba(0,0,0,.92),
+    0 0 90px rgba(56,189,248,.22),
+    0 0 0 1px rgba(255,255,255,.10);
+
+  text-decoration:none;
+  display:block;
+  cursor:pointer;
+}
+
+.center img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+  transform: scale(1.12);
+  filter: contrast(1.06) saturate(1.08) brightness(0.96);
+}
+
+/* обод + внутренняя глубина */
+.center::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:50%;
+  z-index:2;
+  pointer-events:none;
+  box-shadow:
+    inset 0 0 0 2px rgba(244,246,255,.22),
+    inset 0 0 0 12px rgba(2,6,23,.20),
+    inset 0 -26px 34px rgba(0,0,0,.45),
+    inset 0 18px 22px rgba(255,255,255,.14);
+}
+
+/* линза */
+.center::after{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  border-radius:50%;
+  z-index:3;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 28% 20%, rgba(255,255,255,.75), transparent 33%),
+    radial-gradient(circle at 36% 30%, rgba(255,255,255,.28), transparent 42%),
+    radial-gradient(circle at 50% 50%, transparent 58%, rgba(125,211,252,.22) 72%, transparent 82%),
+    radial-gradient(circle at 70% 82%, rgba(0,0,0,.48), transparent 46%),
+    linear-gradient(135deg, rgba(255,255,255,.14), rgba(255,255,255,0) 55%);
+  mix-blend-mode: screen;
+  opacity: .92;
+}
+
+/* ===== ORBIT ===== */
+
+.orbit{
+  position:absolute;
+  inset:0;
+  border-radius:50%;
+  animation:spin 56s linear infinite;
+}
+
+@keyframes spin{
+  from{ transform:rotate(0deg); }
+  to{ transform:rotate(360deg); }
+}
+
+/* ===== PLANETS ===== */
+
+.node{
+  position:absolute;
+  width:92px;
+  height:92px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-decoration:none;
+  color:var(--fg);
+  cursor:pointer;
+
+  /* объём */
+  background:
+    radial-gradient(circle at 30% 24%, rgba(255,255,255,.30), transparent 36%),
+    radial-gradient(circle at 50% 70%, rgba(0,0,0,.25), transparent 54%),
+    radial-gradient(circle at 50% 50%, rgba(15,23,42,.95), rgba(2,6,23,.98));
+
+  border:1px solid rgba(148,163,184,.22);
+  box-shadow:
+    0 18px 54px rgba(2,6,23,.88),
+    inset 0 0 0 1px rgba(255,255,255,.06);
+
+  transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+
+/* чтобы надписи не крутились (контрвращение) */
+.orbit .node{
+  animation:counterspin 56s linear infinite;
+}
+
+@keyframes counterspin{
+  from{ transform:rotate(360deg); }
+  to{ transform:rotate(0deg); }
+}
+
+.node span{
+  font-size:11px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:rgba(244,246,255,.82);
+  text-shadow:0 1px 0 rgba(0,0,0,.65);
+}
+
+/* цветной ореол */
+.node::after{
+  content:"";
+  position:absolute;
+  inset:-8px;
+  border-radius:50%;
+  background: radial-gradient(circle, var(--glow), transparent 62%);
+  filter: blur(6px);
+  opacity: .55;
+  z-index:-1;
+  pointer-events:none;
+}
+
+/* hover */
+.node:hover{
+  transform:scale(1.08);
+  border-color: rgba(255,255,255,.26);
+  box-shadow:
+    0 22px 70px rgba(2,6,23,.92),
+    0 0 30px rgba(255,255,255,.08),
+    inset 0 0 0 1px rgba(255,255,255,.08);
+}
+
+/* Пауза анимации при наведении — легче кликать */
+.system:hover .orbit{
+  animation-play-state: paused;
+}
+.system:hover .orbit .node{
+  animation-play-state: paused;
+}
+
+/* positions: 4 planets */
+.framework{ top:-10px; left:50%; margin-left:-46px; }
+.research { right:-10px; top:50%; margin-top:-46px; }
+.projects { bottom:-10px; left:50%; margin-left:-46px; }
+.contact  { left:-10px; top:50%; margin-top:-46px; }
+
+/* per-planet colors */
+.framework{ --glow: rgba(168,85,247,.40); }   /* purple */
+.research { --glow: rgba(34,211,238,.38); }   /* cyan */
+.projects { --glow: rgba(74,222,128,.38); }   /* green */
+.contact  { --glow: rgba(251,146,60,.38); }   /* orange */
+</style>
+</head>
+
+<body>
+
+<div class="system">
+
+  <!-- CENTER: кликабельно, выходит из iframe -->
+  <a class="center" href="index.html" target="_top" aria-label="Flexion Universe">
+    <img src="Baner-FU.png" alt="Flexion Universe Logo">
+  </a>
+
+  <div class="orbit">
+    <!-- PLANETS: target="_top" чтобы выходить из iframe -->
+    <a class="node framework" href="framework.html" target="_top"><span>Framework</span></a>
+    <a class="node research"  href="research.html"  target="_top"><span>Research</span></a>
+    <a class="node projects"  href="projects.html"  target="_top"><span>Projects</span></a>
+    <a class="node contact"   href="contact.html"   target="_top"><span>Contact</span></a>
+  </div>
+
+</div>
+
+</body>
+</html>

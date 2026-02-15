@@ -5,93 +5,178 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Flexion Universe</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600&display=swap" rel="stylesheet" />
 
 <style>
-:root {
-    --fg: #f4f6ff;
+:root{
+  --bg1:#111827;
+  --bg2:#020617;
+  --fg:#f4f6ff;
+  --muted2:#c7cbe3;
+  --accent:#7dd3fc;
 }
 
-* { box-sizing: border-box; }
+*{ box-sizing:border-box; }
+html,body{ height:100%; }
 
-html, body {
-    height: 100%;
+body{
+  margin:0;
+  font-family:"Sora", system-ui, sans-serif;
+  background: radial-gradient(circle at top left, var(--bg1) 0, var(--bg2) 45%, #000 100%);
+  color: var(--fg);
+  overflow-x:hidden;
 }
 
-body {
-    margin: 0;
-    font-family: "Space Grotesk", system-ui, sans-serif;
-    background: radial-gradient(circle at top left, #111827 0, #020617 45%, #000 100%);
-    color: var(--fg);
+/* ===== space background (same style as other pages) ===== */
+.bg{
+  position:fixed;
+  inset:0;
+  z-index:-2;
+  pointer-events:none;
+  overflow:hidden;
+}
+.bg::before,
+.bg::after{
+  content:"";
+  position:absolute;
+  inset:-20%;
+  background-repeat:repeat;
+  opacity:.55;
+  transform:translateZ(0);
+}
+.bg::before{
+  background-image:
+    radial-gradient(circle, rgba(244,246,255,.55) 0 1px, transparent 2px),
+    radial-gradient(circle, rgba(125,211,252,.35) 0 1px, transparent 2px),
+    radial-gradient(circle, rgba(168,85,247,.25) 0 1px, transparent 2px);
+  background-size:160px 160px, 220px 220px, 320px 320px;
+  animation: driftA 140s linear infinite;
+}
+.bg::after{
+  background-image:
+    radial-gradient(circle, rgba(244,246,255,.35) 0 1px, transparent 2px),
+    radial-gradient(circle, rgba(74,222,128,.18) 0 1px, transparent 2px);
+  background-size:120px 120px, 260px 260px;
+  opacity:.35;
+  animation: driftB 220s linear infinite;
+}
+.nebula{
+  position:absolute;
+  inset:-20%;
+  background:
+    radial-gradient(circle at 20% 15%, rgba(125,211,252,.12), transparent 55%),
+    radial-gradient(circle at 80% 30%, rgba(168,85,247,.10), transparent 58%),
+    radial-gradient(circle at 55% 85%, rgba(74,222,128,.08), transparent 60%),
+    radial-gradient(circle at 30% 75%, rgba(251,146,60,.08), transparent 62%);
+  filter: blur(14px);
+  opacity: .9;
+}
+.rings{
+  position:absolute;
+  inset:-10%;
+  opacity:.35;
+  background:
+    radial-gradient(circle at 50% 55%, transparent 0 36%, rgba(125,211,252,.22) 36.2% 36.6%, transparent 36.8%),
+    radial-gradient(circle at 40% 35%, transparent 0 22%, rgba(168,85,247,.18) 22.2% 22.6%, transparent 22.8%),
+    radial-gradient(circle at 70% 25%, transparent 0 18%, rgba(74,222,128,.14) 18.2% 18.6%, transparent 18.8%);
+  filter: blur(0.2px);
+  animation: slowSpin 240s linear infinite;
+  transform-origin: 50% 50%;
+}
+@keyframes driftA{ from{ transform: translate3d(0,0,0);} to{ transform: translate3d(-120px, 140px, 0);} }
+@keyframes driftB{ from{ transform: translate3d(0,0,0);} to{ transform: translate3d(160px, -120px, 0);} }
+@keyframes slowSpin{ from{ transform: rotate(0deg);} to{ transform: rotate(360deg);} }
+
+/* ===== MAIN LAYOUT (kept) ===== */
+.main{
+  max-width:1200px;
+  margin:0 auto;
+  padding:80px 64px 120px 32px; /* as you had (more on right) */
+  display:grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap:56px;
+  align-items:start;
 }
 
-/* === MAIN LAYOUT === */
-
-.main {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 80px 64px 120px 32px; /* больше справа чтобы орбита не упиралась */
-    display: grid;
-    grid-template-columns: 1.1fr 0.9fr;
-    gap: 56px;
-    align-items: start;
+/* LEFT */
+.left iframe{
+  width:100%;
+  height:620px;
+  border:none;
+  display:block;
+  border-radius:18px;
+  overflow:hidden;
+  background: rgba(2,6,23,0.25);
+  box-shadow: 0 20px 70px rgba(0,0,0,0.45);
 }
 
-/* LEFT: TEXT */
-
-.left iframe {
-    width: 100%;
-    height: 620px;  /* без внутренних скроллов в левом блоке */
-    border: none;
-    display: block;
+/* RIGHT */
+.right{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.right iframe{
+  width:100%;
+  height:520px;
+  border:none;
+  display:block;
+  border-radius:18px;
+  overflow:hidden;
+  background: rgba(2,6,23,0.25);
+  box-shadow: 0 20px 70px rgba(0,0,0,0.45);
 }
 
-/* RIGHT: UNIVERSE */
-
-.right {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+/* subtle “research-like” frame */
+.frame{
+  position:relative;
 }
-
-.right iframe {
-    width: 100%;
-    height: 520px;  /* фиксируем сцену справа */
-    border: none;
-    display: block;
-    overflow: hidden;
+.frame::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  padding:1px;
+  border-radius:18px;
+  background: linear-gradient(135deg,
+    rgba(125,211,252,.35),
+    rgba(168,85,247,.25),
+    rgba(74,222,128,.18),
+    rgba(244,246,255,.12)
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity:.65;
+  pointer-events:none;
 }
 
 /* RESPONSIVE */
-
-@media (max-width: 900px) {
-    .main {
-        grid-template-columns: 1fr;
-        padding: 56px 20px 100px;
-        gap: 36px;
-    }
-
-    .left iframe {
-        height: 560px;
-    }
-
-    .right iframe {
-        height: 420px;
-    }
+@media (max-width: 900px){
+  .main{
+    grid-template-columns: 1fr;
+    padding:56px 20px 100px;
+    gap:36px;
+  }
+  .left iframe{ height:560px; }
+  .right iframe{ height:420px; }
 }
 </style>
 </head>
 
 <body>
+<div class="bg" aria-hidden="true">
+  <div class="nebula"></div>
+  <div class="rings"></div>
+</div>
 
 <main class="main">
-    <div class="left">
-        <iframe src="intro-text.html" title="Flexion Universe Intro"></iframe>
-    </div>
+  <div class="left frame">
+    <iframe src="intro-text.html" title="Flexion Universe Intro"></iframe>
+  </div>
 
-    <div class="right">
-        <iframe src="universe-orbit.html" title="Flexion Universe Navigation"></iframe>
-    </div>
+  <div class="right frame">
+    <iframe src="universe-orbit.html" title="Flexion Universe Navigation"></iframe>
+  </div>
 </main>
 
 </body>

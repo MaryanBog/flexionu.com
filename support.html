@@ -498,9 +498,13 @@ h1{
   
   </div>
   
+  <!-- IMPORTANT: load libs BEFORE claim script -->
+  <script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bs58@5.0.0/dist/bs58.min.js"></script>
+  
   <script>
     const BACKEND = "https://fsm-claim-backend.onrender.com";
-    const connection = new solanaWeb3.Connection("https://api.mainnet-beta.solana.com");
+    const connection = new solanaWeb3.Connection("https://api.mainnet-beta.solana.com", "confirmed");
     
     async function connectWallet() {
       if (!window.solana || !window.solana.isPhantom) {
@@ -511,48 +515,88 @@ h1{
       return resp.publicKey.toString();
     }
     
+    async function postJson(url, body) {
+      const res = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body || {}),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
+      return data;
+    }
+    
     document.getElementById("claimBtn").onclick = async () => {
+      const btn = document.getElementById("claimBtn");
+      btn.disabled = true;
+      btn.textContent = "Claiming...";
+    
       try {
         const wallet = await connectWallet();
         if (!wallet) return;
     
-        // просто запрашиваем tx у backend
-        const res = await fetch(BACKEND + "/claim", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ wallet })
-        });
+        // 0) get server challenge
+        const ch = await postJson(BACKEND + "/challenge", { wallet });
     
-        const data = await res.json();
-    
-        if (data.alreadyClaimed) {
+        if (ch.alreadyClaimed) {
           alert("Already claimed this week.");
           return;
         }
     
-        if (!data.txBase64) {
-          alert(data.error || "No transaction returned");
+        const message = ch.message;
+        if (!message) throw new Error("No challenge message returned");
+    
+        // 1) sign server message
+        const encoded = new TextEncoder().encode(message);
+        const signed = await window.solana.signMessage(encoded, "utf8");
+        const signature = bs58.encode(signed.signature);
+    
+        // 2) request tx
+        const claim = await postJson(BACKEND + "/claim", { wallet, signature });
+    
+        if (claim.alreadyClaimed) {
+          alert("Already claimed this week.");
           return;
         }
+        if (!claim.txBase64) throw new Error("No transaction returned");
     
-        const txBytes = Uint8Array.from(atob(data.txBase64), c => c.charCodeAt(0));
+        const txBytes = Uint8Array.from(atob(claim.txBase64), (c) => c.charCodeAt(0));
+        const tx = solanaWeb3.Transaction.from(txBytes);
     
-        const txSig = await connection.sendRawTransaction(txBytes, { skipPreflight: false });
-        await connection.confirmTransaction(txSig, "confirmed");
+        // 3) send + wait confirm
+        const txSig = await connection.sendRawTransaction(tx.serialize(), { skipPreflight: false });
+        const { value } = await connection.confirmTransaction(txSig, "confirmed");
+        if (value && value.err) throw new Error("Transaction failed");
     
-        await fetch(BACKEND + "/confirm", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ wallet, txSig })
-        });
+        // 4) notify backend
+        await postJson(BACKEND + "/confirm", { wallet, txSig });
     
         alert("FSM claimed successfully!");
       } catch (e) {
         console.error(e);
-        alert("Claim failed");
+        alert(e?.message || "Claim failed");
+      } finally {
+        btn.disabled = false;
+        btn.textContent = "Claim FSM";
       }
     };
     </script>
+  
+  <script>
+  const ADDRESS = "B9xmmg2zPMSwPg7iX7a9J2j6SK5LcopZ8abRDj9ughxw";
+  
+  async function copyAddr(){
+    try{
+      await navigator.clipboard.writeText(ADDRESS);
+    }catch(e){
+      const el = document.getElementById("addr");
+      const range = document.createRange();
+      range.selectNodeContents(el);
+      const sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+    }
+  }
   
   function openExplorer(){
     window.open("https://explorer.solana.com/address/" + ADDRESS, "_blank", "noopener");

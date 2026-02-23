@@ -500,7 +500,7 @@ h1{
   
   <!-- IMPORTANT: load libs BEFORE claim script -->
   <script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bs58@5.0.0/dist/bs58.min.js"></script>
+  <script src="https://unpkg.com/bs58@5.0.0/dist/bs58.min.js"></script>
   
   <script>
     const BACKEND = "https://fsm-claim-backend.onrender.com";
@@ -549,7 +549,7 @@ h1{
         // 1) sign server message
         const encoded = new TextEncoder().encode(message);
         const signed = await window.solana.signMessage(encoded, "utf8");
-        const signature = bs58.encode(signed.signature);
+        const signature = window.bs58.encode(signed.signature);
     
         // 2) request tx
         const claim = await postJson(BACKEND + "/claim", { wallet, signature });

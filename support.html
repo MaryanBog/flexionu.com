@@ -548,7 +548,7 @@ h1{
         // 1) sign server message
         const encoded = new TextEncoder().encode(message);
         const signed = await window.solana.signMessage(encoded, "utf8");
-        const signature = solanaWeb3.bs58.encode(signed.signature);
+        const signature = btoa(String.fromCharCode(...signed.signature));
     
         // 2) request tx
         const claim = await postJson(BACKEND + "/claim", { wallet, signature });

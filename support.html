@@ -563,7 +563,7 @@ h1{
         const tx = solanaWeb3.Transaction.from(txBytes);
     
         // 3) send + wait confirm
-        const txSig = await connection.sendRawTransaction(tx.serialize(), { skipPreflight: false });
+        const txSig = await window.solana.sendTransaction(tx, connection);
         const { value } = await connection.confirmTransaction(txSig, "confirmed");
         if (value && value.err) throw new Error("Transaction failed");
     

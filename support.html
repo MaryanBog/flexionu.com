@@ -498,97 +498,61 @@ h1{
   
   </div>
   
-  <!-- IMPORTANT: load libs BEFORE claim script -->
-  <script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.js"></script>
-  <script src="https://unpkg.com/bs58@5.0.0/dist/bs58.min.js"></script>
-  
   <script>
-  const BACKEND = "https://fsm-claim-backend.onrender.com";
-  const connection = new solanaWeb3.Connection("https://api.mainnet-beta.solana.com");
-  
-  async function connectWallet() {
-    if (!window.solana || !window.solana.isPhantom) {
-      alert("Install Phantom wallet");
-      return null;
-    }
-    const resp = await window.solana.connect();
-    return resp.publicKey.toString();
-  }
-  
-  function buildMessage(wallet, nonce) {
-    return [
-      "Flexion Support Mark (FSM) — Claim",
-      "I am claiming FSM as a symbolic on-chain support badge.",
-      `Wallet: ${wallet}`,
-      `Nonce: ${nonce}`,
-      "No sale. No exchange. No expectations of profit."
-    ].join("\n");
-  }
-  
-  document.getElementById("claimBtn").onclick = async () => {
-    try {
-      const wallet = await connectWallet();
-      if (!wallet) return;
-  
-      const nonce = Date.now().toString();
-      const message = buildMessage(wallet, nonce);
-      const encoded = new TextEncoder().encode(message);
-  
-      const signed = await window.solana.signMessage(encoded, "utf8");
-      const signature = bs58.encode(signed.signature);
-  
-      const res = await fetch(BACKEND + "/claim", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ wallet, nonce, signature })
-      });
-  
-      const data = await res.json();
-  
-      if (data.alreadyClaimed) {
-        alert("Already claimed this week.");
-        return;
+    const BACKEND = "https://fsm-claim-backend.onrender.com";
+    const connection = new solanaWeb3.Connection("https://api.mainnet-beta.solana.com");
+    
+    async function connectWallet() {
+      if (!window.solana || !window.solana.isPhantom) {
+        alert("Install Phantom wallet");
+        return null;
       }
-  
-      if (!data.txBase64) {
-        alert(data.error || "No transaction returned");
-        return;
+      const resp = await window.solana.connect();
+      return resp.publicKey.toString();
+    }
+    
+    document.getElementById("claimBtn").onclick = async () => {
+      try {
+        const wallet = await connectWallet();
+        if (!wallet) return;
+    
+        // просто запрашиваем tx у backend
+        const res = await fetch(BACKEND + "/claim", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ wallet })
+        });
+    
+        const data = await res.json();
+    
+        if (data.alreadyClaimed) {
+          alert("Already claimed this week.");
+          return;
+        }
+    
+        if (!data.txBase64) {
+          alert(data.error || "No transaction returned");
+          return;
+        }
+    
+        const txBytes = Uint8Array.from(atob(data.txBase64), c => c.charCodeAt(0));
+    
+        const txSig = await connection.sendRawTransaction(txBytes, { skipPreflight: false });
+        await connection.confirmTransaction(txSig, "confirmed");
+    
+        await fetch(BACKEND + "/confirm", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ wallet, txSig })
+        });
+    
+        alert("FSM claimed successfully!");
+      } catch (e) {
+        console.error(e);
+        alert("Claim failed");
       }
-  
-      const txBytes = Uint8Array.from(atob(data.txBase64), c => c.charCodeAt(0));
-      const txSig = await connection.sendRawTransaction(txBytes, { skipPreflight: false });
-      await connection.confirmTransaction(txSig, "confirmed");
-      console.log("CONFIRMED:", txSig);
-  
-      await fetch(BACKEND + "/confirm", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ wallet, txSig })
-      });
-  
-      alert("FSM claimed successfully!");
-    } catch (e) {
-      console.error(e);
-      alert("Claim failed");
-    }
-  };
-  </script>
-  
-  <script>
-  const ADDRESS = "B9xmmg2zPMSwPg7iX7a9J2j6SK5LcopZ8abRDj9ughxw";
-  
-  async function copyAddr(){
-    try{
-      await navigator.clipboard.writeText(ADDRESS);
-    }catch(e){
-      const el = document.getElementById("addr");
-      const range = document.createRange();
-      range.selectNodeContents(el);
-      const sel = window.getSelection();
-      sel.removeAllRanges();
-      sel.addRange(range);
-    }
-  }
+    };
+    </script>
   
   function openExplorer(){
     window.open("https://explorer.solana.com/address/" + ADDRESS, "_blank", "noopener");

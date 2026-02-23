@@ -503,7 +503,6 @@ h1{
   
   <script>
     const BACKEND = "https://fsm-claim-backend.onrender.com";
-    const connection = new solanaWeb3.Connection("https://api.mainnet-beta.solana.com", "confirmed");
   
     async function connectWallet() {
       if (!window.solana || !window.solana.isPhantom) {
@@ -544,7 +543,7 @@ h1{
         const message = ch.message;
         if (!message) throw new Error("No challenge message returned");
   
-        // 1) sign server message (base64 signature)
+        // 1) sign server message (BASE64 signature)
         const encoded = new TextEncoder().encode(message);
         const signed = await window.solana.signMessage(encoded, "utf8");
         const signature = btoa(String.fromCharCode(...signed.signature));
@@ -557,16 +556,12 @@ h1{
         }
         if (!claim.txBase64) throw new Error("No transaction returned");
   
-        // 3) submit tx via backend (NOT Phantom)
+        // 3) submit tx via backend (backend uses Helius RPC)
         const sub = await postJson(BACKEND + "/submit", { wallet, txBase64: claim.txBase64 });
         const txSig = sub.txSig;
         if (!txSig) throw new Error("No txSig returned from /submit");
   
-        // 4) wait confirm (public RPC ok for confirm)
-        const { value } = await connection.confirmTransaction(txSig, "confirmed");
-        if (value && value.err) throw new Error("Transaction failed");
-  
-        // 5) notify backend
+        // 4) backend confirmation + verification
         await postJson(BACKEND + "/confirm", { wallet, txSig });
   
         alert("FSM claimed successfully!");

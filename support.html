@@ -556,9 +556,8 @@ h1{
       }
   
       const txBytes = Uint8Array.from(atob(data.txBase64), c => c.charCodeAt(0));
-      const tx = solanaWeb3.Transaction.from(txBytes);
-  
-      const txSig = await connection.sendRawTransaction(tx.serialize());
+      const txSig = await connection.sendRawTransaction(txBytes);
+      console.log("CONFIRMED");
   
       await fetch(BACKEND + "/confirm", {
         method: "POST",

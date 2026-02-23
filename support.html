@@ -504,7 +504,7 @@ h1{
   <script>
     const BACKEND = "https://fsm-claim-backend.onrender.com";
     const connection = new solanaWeb3.Connection("https://api.mainnet-beta.solana.com", "confirmed");
-    
+  
     async function connectWallet() {
       if (!window.solana || !window.solana.isPhantom) {
         alert("Install Phantom wallet");
@@ -513,7 +513,7 @@ h1{
       const resp = await window.solana.connect();
       return resp.publicKey.toString();
     }
-    
+  
     async function postJson(url, body) {
       const res = await fetch(url, {
         method: "POST",
@@ -524,52 +524,51 @@ h1{
       if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
       return data;
     }
-    
+  
     document.getElementById("claimBtn").onclick = async () => {
       const btn = document.getElementById("claimBtn");
       btn.disabled = true;
       btn.textContent = "Claiming...";
-    
+  
       try {
         const wallet = await connectWallet();
         if (!wallet) return;
-    
+  
         // 0) get server challenge
         const ch = await postJson(BACKEND + "/challenge", { wallet });
-    
         if (ch.alreadyClaimed) {
           alert("Already claimed this week.");
           return;
         }
-    
+  
         const message = ch.message;
         if (!message) throw new Error("No challenge message returned");
-    
-        // 1) sign server message
+  
+        // 1) sign server message (base64 signature)
         const encoded = new TextEncoder().encode(message);
         const signed = await window.solana.signMessage(encoded, "utf8");
         const signature = btoa(String.fromCharCode(...signed.signature));
-    
-        // 2) request tx
+  
+        // 2) request fully-signed tx from backend
         const claim = await postJson(BACKEND + "/claim", { wallet, signature });
-    
         if (claim.alreadyClaimed) {
           alert("Already claimed this week.");
           return;
         }
         if (!claim.txBase64) throw new Error("No transaction returned");
-    
-        const txBytes = Uint8Array.from(atob(claim.txBase64), (c) => c.charCodeAt(0));
-        const tx = solanaWeb3.Transaction.from(txBytes);
-    
-        // 3) send + wait confirm
-        const { signature: txSig } = await window.solana.signAndSendTransaction(tx);
+  
+        // 3) submit tx via backend (NOT Phantom)
+        const sub = await postJson(BACKEND + "/submit", { wallet, txBase64: claim.txBase64 });
+        const txSig = sub.txSig;
+        if (!txSig) throw new Error("No txSig returned from /submit");
+  
+        // 4) wait confirm (public RPC ok for confirm)
         const { value } = await connection.confirmTransaction(txSig, "confirmed");
         if (value && value.err) throw new Error("Transaction failed");
-    
-        // 4) notify backend
+  
+        // 5) notify backend
         await postJson(BACKEND + "/confirm", { wallet, txSig });
-    
+  
         alert("FSM claimed successfully!");
       } catch (e) {
         console.error(e);
@@ -579,7 +578,7 @@ h1{
         btn.textContent = "Claim FSM";
       }
     };
-    </script>
+  </script>
   
   <script>
   const ADDRESS = "B9xmmg2zPMSwPg7iX7a9J2j6SK5LcopZ8abRDj9ughxw";

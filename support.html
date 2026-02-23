@@ -385,124 +385,215 @@ h1{
 </head>
 
 <body>
-<div class="bg" aria-hidden="true">
-  <div class="nebula"></div>
-  <div class="rings"></div>
-</div>
-
-<div class="container">
-
-  <div class="topbar">
-    <a class="brand" href="index.html">
-      <div class="brand-dot"></div>
-      <span>Flexion Universe</span>
-    </a>
-
-    <div class="navlinks">
-      <a class="pill" href="framework.html">Framework</a>
-      <a class="pill" href="research.html">Research</a>
-      <a class="pill" href="projects.html">Projects</a>
-      <a class="pill" href="contact.html">Contact</a>
-    </div>
+  <div class="bg" aria-hidden="true">
+    <div class="nebula"></div>
+    <div class="rings"></div>
   </div>
-
-  <h1>Support</h1>
-  <p class="sub">
-    Send <b>SOL</b> to the address below. After confirmation, <b>FSM</b> may be sent to the sender as an on-chain support mark.
-  </p>
-
-  <div class="counter">Support · 2 items</div>
-
-  <div class="arc-wrap">
-
-    <!-- decorative arc line behind -->
-    <svg class="arc-line" viewBox="0 0 1200 240" preserveAspectRatio="none" aria-hidden="true">
-      <defs>
-        <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stop-color="rgba(125,211,252,0.0)"/>
-          <stop offset="0.35" stop-color="rgba(125,211,252,0.22)"/>
-          <stop offset="0.65" stop-color="rgba(168,85,247,0.18)"/>
-          <stop offset="1" stop-color="rgba(74,222,128,0.0)"/>
-        </linearGradient>
-      </defs>
-      <path d="M120 22 C 520 40, 680 210, 1080 226" fill="none" stroke="url(#g)" stroke-width="2"/>
-      <path d="M120 22 C 520 40, 680 210, 1080 226" fill="none" stroke="rgba(244,246,255,0.06)" stroke-width="1"/>
-    </svg>
-
-    <div class="arc">
-
-      <!-- CARD 1: WALLET -->
-      <div class="card">
-        <div class="row">
-          <div class="title">Send SOL (Solana)</div>
-          <div class="badge">Address</div>
-        </div>
-
-        <div class="wallet">
-          <div class="addr" id="addr">B9xmmg2zPMSwPg7iX7a9J2j6SK5LcopZ8abRDj9ughxw</div>
-
-          <div class="actions">
-            <button class="btn primary" onclick="copyAddr()">Copy</button>
-            <button class="btn" onclick="openExplorer()">Explorer</button>
+  
+  <div class="container">
+  
+    <div class="topbar">
+      <a class="brand" href="index.html">
+        <div class="brand-dot"></div>
+        <span>Flexion Universe</span>
+      </a>
+  
+      <div class="navlinks">
+        <a class="pill" href="framework.html">Framework</a>
+        <a class="pill" href="research.html">Research</a>
+        <a class="pill" href="projects.html">Projects</a>
+        <a class="pill" href="contact.html">Contact</a>
+      </div>
+    </div>
+  
+    <h1>Support</h1>
+    <p class="sub">
+      Send <b>SOL</b> to the address below. After confirmation, <b>FSM</b> may be sent to the sender as an on-chain support mark.
+    </p>
+  
+    <div class="counter">Support · 2 items</div>
+  
+    <div class="arc-wrap">
+  
+      <!-- decorative arc line behind -->
+      <svg class="arc-line" viewBox="0 0 1200 240" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="rgba(125,211,252,0.0)"/>
+            <stop offset="0.35" stop-color="rgba(125,211,252,0.22)"/>
+            <stop offset="0.65" stop-color="rgba(168,85,247,0.18)"/>
+            <stop offset="1" stop-color="rgba(74,222,128,0.0)"/>
+          </linearGradient>
+        </defs>
+        <path d="M120 22 C 520 40, 680 210, 1080 226" fill="none" stroke="url(#g)" stroke-width="2"/>
+        <path d="M120 22 C 520 40, 680 210, 1080 226" fill="none" stroke="rgba(244,246,255,0.06)" stroke-width="1"/>
+      </svg>
+  
+      <div class="arc">
+  
+        <!-- CARD 1: WALLET -->
+        <div class="card">
+          <div class="row">
+            <div class="title">Send SOL (Solana)</div>
+            <div class="badge">Address</div>
           </div>
+  
+          <div class="wallet">
+            <div class="addr" id="addr">B9xmmg2zPMSwPg7iX7a9J2j6SK5LcopZ8abRDj9ughxw</div>
+  
+            <div class="actions">
+              <button class="btn primary" onclick="copyAddr()">Copy</button>
+              <button class="btn" onclick="openExplorer()">Explorer</button>
+            </div>
+          </div>
+  
+          <hr class="sep" />
+  
+          <p class="small">
+            Always verify the address before sending.
+          </p>
         </div>
-
-        <hr class="sep" />
-
-        <p class="small">
-          Always verify the address before sending.
-        </p>
-      </div>
-
-      <!-- CARD 2: FSM -->
-      <div class="card">
-        <div class="row">
-          <div class="title">Receive FSM</div>
-          <div class="badge">Support Mark</div>
+  
+        <!-- CARD 2: FSM -->
+        <div class="card">
+          <div class="row">
+            <div class="title">Receive FSM</div>
+            <div class="badge">Support Mark</div>
+          </div>
+  
+          <p class="text">
+            <b>Flexion Support Mark (FSM)</b> is a symbolic on-chain record of voluntary ideological support for Flexion research.
+          </p>
+  
+          <p class="text" style="margin-top:10px;">
+            <b>Token details:</b><br>
+            Name: Flexion Support Mark<br>
+            Symbol: FSM<br>
+            Network: Solana<br>
+            Mint: 7Admm1BZYi91xaS54D3ELnbP78VM1a1creUe2uVcibZ2<br>
+            Decimals: 6<br>
+            Fixed Supply: 10,000,000
+          </p>
+  
+          <p class="text" style="margin-top:10px;">
+            FSM provides no rights, no utility, no governance, no revenue, and no equity.
+            It is not a security, not an investment contract, and not a financial instrument.
+          </p>
+  
+          <div class="actions" style="margin-top:12px;">
+            <button class="btn primary" id="claimBtn">Claim FSM</button>
+          </div>
+  
+          <hr class="sep" />
+  
+          <p class="small">
+            FSM represents only an on-chain acknowledgment of voluntary support.
+            No promises, guarantees, or expectations of profit are associated with FSM.
+            Any transfer of FSM is discretionary and does not represent a sale, exchange rate, or valuation.
+          </p>
         </div>
-
-        <p class="text">
-          <b>FSM (Flexion Support Mark)</b> is a symbolic on-chain record of voluntary support for Flexion research.
-        </p>
-
-        <p class="text" style="margin-top:10px;">
-          Fixed supply: <b>10,000,000</b>.
-          No rights. No utility. No governance. No revenue. Not equity.
-        </p>
-
-        <hr class="sep" />
-
-        <p class="small">
-          The amount of FSM (if any) is determined solely by Flexion Labs Inc.
-          This is not a price, rate, valuation, or exchange ratio.
-        </p>
+  
       </div>
-
     </div>
+  
   </div>
-
-</div>
-
-<script>
-const ADDRESS = "B9xmmg2zPMSwPg7iX7a9J2j6SK5LcopZ8abRDj9ughxw";
-
-async function copyAddr(){
-  try{
-    await navigator.clipboard.writeText(ADDRESS);
-  }catch(e){
-    const el = document.getElementById("addr");
-    const range = document.createRange();
-    range.selectNodeContents(el);
-    const sel = window.getSelection();
-    sel.removeAllRanges();
-    sel.addRange(range);
+  
+  <!-- IMPORTANT: load libs BEFORE claim script -->
+  <script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bs58@5.0.0/dist/bs58.min.js"></script>
+  
+  <script>
+  const BACKEND = "https://fsm-claim-backend.onrender.com";
+  const connection = new solanaWeb3.Connection("https://api.mainnet-beta.solana.com");
+  
+  async function connectWallet() {
+    if (!window.solana || !window.solana.isPhantom) {
+      alert("Install Phantom wallet");
+      return null;
+    }
+    const resp = await window.solana.connect();
+    return resp.publicKey.toString();
   }
-}
-
-function openExplorer(){
-  window.open("https://explorer.solana.com/address/" + ADDRESS, "_blank", "noopener");
-}
-</script>
-
-</body>
+  
+  function buildMessage(wallet, nonce) {
+    return [
+      "Flexion Support Mark (FSM) — Claim",
+      "I am claiming FSM as a symbolic on-chain support badge.",
+      `Wallet: ${wallet}`,
+      `Nonce: ${nonce}`,
+      "No sale. No exchange. No expectations of profit."
+    ].join("\n");
+  }
+  
+  document.getElementById("claimBtn").onclick = async () => {
+    try {
+      const wallet = await connectWallet();
+      if (!wallet) return;
+  
+      const nonce = Date.now().toString();
+      const message = buildMessage(wallet, nonce);
+      const encoded = new TextEncoder().encode(message);
+  
+      const signed = await window.solana.signMessage(encoded, "utf8");
+      const signature = bs58.encode(signed.signature);
+  
+      const res = await fetch(BACKEND + "/claim", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ wallet, nonce, signature })
+      });
+  
+      const data = await res.json();
+  
+      if (data.alreadyClaimed) {
+        alert("Already claimed this week.");
+        return;
+      }
+  
+      if (!data.txBase64) {
+        alert(data.error || "No transaction returned");
+        return;
+      }
+  
+      const txBytes = Uint8Array.from(atob(data.txBase64), c => c.charCodeAt(0));
+      const tx = solanaWeb3.Transaction.from(txBytes);
+  
+      const txSig = await connection.sendRawTransaction(tx.serialize());
+  
+      await fetch(BACKEND + "/confirm", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ wallet, txSig })
+      });
+  
+      alert("FSM claimed successfully!");
+    } catch (e) {
+      console.error(e);
+      alert("Claim failed");
+    }
+  };
+  </script>
+  
+  <script>
+  const ADDRESS = "B9xmmg2zPMSwPg7iX7a9J2j6SK5LcopZ8abRDj9ughxw";
+  
+  async function copyAddr(){
+    try{
+      await navigator.clipboard.writeText(ADDRESS);
+    }catch(e){
+      const el = document.getElementById("addr");
+      const range = document.createRange();
+      range.selectNodeContents(el);
+      const sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+    }
+  }
+  
+  function openExplorer(){
+    window.open("https://explorer.solana.com/address/" + ADDRESS, "_blank", "noopener");
+  }
+  </script>
+  
+  </body>
 </html>

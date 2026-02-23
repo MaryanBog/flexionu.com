@@ -500,7 +500,7 @@ h1{
   
   <!-- IMPORTANT: load libs BEFORE claim script -->
   <script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bs58@5.0.0/dist/bs58.min.js"></script>
+  <script src="https://unpkg.com/bs58@5.0.0/dist/bs58.min.js"></script>
   
   <script>
   const BACKEND = "https://fsm-claim-backend.onrender.com";
@@ -556,8 +556,9 @@ h1{
       }
   
       const txBytes = Uint8Array.from(atob(data.txBase64), c => c.charCodeAt(0));
-      const txSig = await connection.sendRawTransaction(txBytes);
-      console.log("CONFIRMED");
+      const txSig = await connection.sendRawTransaction(txBytes, { skipPreflight: false });
+      await connection.confirmTransaction(txSig, "confirmed");
+      console.log("CONFIRMED:", txSig);
   
       await fetch(BACKEND + "/confirm", {
         method: "POST",
